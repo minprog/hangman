@@ -40,7 +40,7 @@ Your assignment is to write a computer program which plays a game of Hangman usi
 
 	1.  Choose a random dictionary word of the requested length.
 
-	2.  Print out how many guesses the user has remaining, along with any letters the player has guessed and the current blanked-out version of the word.
+	2.  Print out how many **wrong** guesses the user has remaining, along with any letters the player has guessed and the current blanked-out version of the word.
 
 	3.  Prompt the user for a single letter guess, reprompting until the user enters a letter that she hasn't guessed yet. Make sure that the input is exactly one character long and that it's a letter of the alphabet.
 
@@ -135,7 +135,7 @@ You can now test using `check50` for the first time!
 
 So now we have a class to manage the word list. We can also create a class that manages playing a game of Hangman. Let's think about what is needed to "play" a game.
 
--   First of all, a game is played based on a particular word length. Also, we decide upfront how many guesses will be allowed. These two are the only pieces of information that a Hangman game object needs to get started. This means that we know how it may be eventually initialized:
+-   First of all, a game is played based on a particular word length. Also, we decide upfront how many **wrong** guesses will be allowed. These two are the only pieces of information that a Hangman game object needs to get started. This means that we know how it may be eventually initialized:
 
         game = Hangman(length=8, num_guesses=5)
 
@@ -212,14 +212,14 @@ Does it all seem reasonable? Feel free to add a `print` somewhere to debug your 
 A user should be able to win or lose the game, and our computer version should be able to check if a game has been won or lost. Let's add a few methods to the `Hangman` class:
 
     def won(self):
-        # Return True if the game is finished and the player has won, 
+        # Return True if the game is finished and the player has won,
         # otherwise False.
         # TODO
 
 When has the game been won? Think about it. You should be able to program this method without introducing new `self` variables, but instead, calculating if the game has been won by checking out the letters in `self.guessed`.
 
     def lost(self):
-        # Return True if the game is finished and the player has lost, 
+        # Return True if the game is finished and the player has lost,
         # otherwise False.
         # TODO
 
@@ -271,19 +271,19 @@ Try it yourself! Most likely, your code will indeed try to create a hangman game
 
 Because the `Hangman` object does not interface directly with the user, it makes no sense for it to re-prompt the user for new input. However, it also makes no sense to just continue the program. It would only lead to errors further down the line. We can take this opportunity to proactively check for problems in our code. To do this, we use Python **assertions**. To create an assertion, we need to understand what would be *correct* input. We have two parameters that influence the inner workings of the Hangman object:
 
-- The parameter `length` is the length of a word to play Hangman with. Negative length is not going to work - and 0-length words will not lead to a working game either. Other options we have to think about a little bit harder: is a game for words of size 1 fun? Do 1-letter words even exist? You can check that yourself. The same goes for 2-letter words. And at the other end you could check that the `length` isn't much longer than the maximum 'length' that corresponds with the longest word from the dictionary.
+- The parameter `length` is the length of a word to play Hangman with. Negative length is not going to work - and 0-length words will not lead to a working game either. Other options we have to think about a little bit harder: is a game for words of size 1 fun? Do 1-letter words even exist? You can check that yourself. The same goes for 2-letter words. And at the other end you could check that the `length` isn't longer than say... 10?
 
 - For `num_guesses` you should also think about what realistic input would be. But don't take it too far. We're mostly looking to constrain the parameters to *sane* values - values that make sure the program/algorithm will not crash and will provide the "right answer".
 
 After having defined those constraints, you can formulate an assertion:
 
-    assert length > [MIN] and length < [MAX]
+    assert length > 0 and length < 10
 
-Putting this simple stament in your code will make sure that Python halts the program if at that point the assertion "fails". Of course, [MIN] and [MAX] should be replaced with the actual minimum and maximum values you want to enforce.
+Putting this simple stament in your code will make sure that Python halts the program if at that point the assertion "fails".
 
     class Hangman:
         def __init__(self, length, num_guesses):
-            assert length > [MIN] and length < [MAX]
+            assert length > 0 and length < 10
             # ... and here follows other code.
 
 Now if for some reason you (or someone else) tries to create a program that creates a Hangman object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
@@ -293,13 +293,15 @@ Note that `check50` for this problem expects that such assertions are present in
 
 ### 8. Implementing user interaction
 
+**WATCH OUT**. Do not implement step 8 before `check50` is completely satisfied with your assertions for the `guess()` method.
+
 While the `Hangman` class has all you need to play Hangman, someone who does not know your program won't understand that you have to write things like `game = Hangman(8, 6)` to start a game and `game.guess("e")` to guess a letter. So, let's make a **user interface**.
 
 Your user interface should at least:
 
 1. Prompt the user for how many letters the Hangman word should have. If the input is not a positive integer, or there is no word with that many letters, repeat the prompt until you get correct input.
 
-2. Prompt the user for how many guesses she should get until she loses. This should be a positive integer.
+2. Prompt the user for how many wrong guesses she should get until she loses. This should be a positive integer.
 
 4. Play the game: repeatedly do the following
 
