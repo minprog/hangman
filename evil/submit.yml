@@ -1,4 +1,4 @@
-name: hangman
+name: hangman-more
 files:
     required:
         - hangman.py
