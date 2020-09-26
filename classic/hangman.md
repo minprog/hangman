@@ -1,6 +1,6 @@
 # Classic Hangman
 
-> Note: the analysis for this assignment must be done individually.
+> Note: the analysis for this problem must be done individually. Instructions for the analysis are included in the assignments below.
 {:.bg-warning}
 
 ## tl;dr
@@ -96,7 +96,7 @@ Then create a file called `hangman.py` and add the following code.
             if game.won():
                 print("Whoa, you won!!! Let's play again.")
             else:
-                print("Sad, you lost ¯\_(ツ)_/¯. This was your word: {word}")
+                print(f"Sad, you lost ¯\_(ツ)_/¯. This was your word: {word}")
 
 
 ## Assignment 1
@@ -120,7 +120,7 @@ Add your diagram and comments to a file called `analysis.pdf`. You will add more
 
 Having discussed your diagram and having changed it depending on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file.
 
-Note that the loading of words was demonstrated in last week's [Python lecture](/lectures/python)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
+Note that the loading of words was demonstrated in last week's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
 
 Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
 
