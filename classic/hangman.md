@@ -14,6 +14,7 @@ Implement a program that allows someone to play the classic Hangman game against
 	_____N__
 	Guess a letter: ...
 
+
 ## Background
 
 In case you aren't familiar with the game Hangman, the rules are as follows:
@@ -26,46 +27,14 @@ In case you aren't familiar with the game Hangman, the rules are as follows:
 
 Fundamental to the game is the fact the first player accurately represents the word she has chosen. That way, when the other players guess letters, she can reveal whether that letter is in the word.
 
+
 ## Specification
 
-Your assignment is to write a computer program which plays a game of Hangman using this "Evil Hangman" algorithm. In particular, your program should do the following:
+Your assignment is to write a computer program which plays a game of Hangman using the game rules above. In fact, you will be provided with the main program, but all game logic is missing. Your task is to design and implement two classes called `Hangman` and `Lexicon`, which provide all functionality to make the starter code work *without changes*.
 
-1. Read the file `dictionary.txt`, which contains the full contents of the Official Scrabble Player's Dictionary, Second Edition. This word list has over 120,000 words, which should be more than enough for our purposes.
+- `Lexicon` objects are used to retrieve words for the game from a dictionary. Eventually, the `Lexicon` class will be based on the file `dictionary.txt`, which contains the full contents of the Official Scrabble Player's Dictionary, Second Edition. This word list has over 120,000 words, which should be more than enough for our purposes.
 
-2. Prompt the user for a word length, reprompting as necessary until she enters a number such that there's at least one word that's exactly that long. That is, if the user wants to play with words of length -42 or 137, since no English words are that long, you should reprompt her.
-
-3. Prompt the user for a number of guesses, which must be an integer greater than zero. Don't worry about unusually large numbers of guesses – after all, having more than 26 guesses is clearly not going to help your opponent!
-
-4. Play a game of Hangman as described below:
-
-	1.  Choose a random dictionary word of the requested length.
-
-	2.  Print out how many **wrong** guesses the user has remaining, along with any letters the player has guessed and the current blanked-out version of the word.
-
-	3.  Prompt the user for a single letter guess, reprompting until the user enters a letter that she hasn't guessed yet. Make sure that the input is exactly one character long and that it's a letter of the alphabet.
-
-	4.  Check if the word contains that guessed letter, and update the user with a blanked-out version of the word - but with the new letter now filled in.
-
-	5.  If the player has run out of guesses, pick a word from the word list and display it as the word that the computer initially "chose."
-
-	6.  If the player correctly guesses the word, congratulate her.
-
-		Ask if the user wants to play again and loop or exit accordingly.
-
-
-## Architecture
-
-Your program will consist of three major parts.
-
-1. The Lexicon class: Lexicon objects are used to retrieve words for the game from a dictionary.
-
-2. The Hangman class: a *Hangman* object will include all of the logic needed to play the Hangman game. It will keep track of the current status of the game, and it will be able to update the status of the game when a letter is guessed. However, a Hangman object will not directly interact with the user (the person playing the game).
-
-3. The user interface: this is a piece of code that interacts with the user. It displays messages to the user about the game, and prompts her for new guesses. This piece of code will use the Hangman class to keep track of the game itself.
-
-For the Lexicon and Hangman classes, we will prescribe how they should work, like in previous assignments. They can be checked with `check50`. For the user interface, you have some freedom, but be careful to stick to the specification.
-
-By the way, watch out for gaps in the dictionary. When the user specifies a word length, you will need to check that there are indeed words of that length in the dictionary. You might initially assume that if the requested word length is less than the length of the longest word in the dictionary, there must be some word of that length. Unfortunately, the dictionary contains a few "gaps." The longest word in the dictionary has length 29, but there are no words of length 26. Be sure to take this into account when checking if a word length is valid.
+- A `Hangman` object will include all of the logic needed to play the game. It will keep track of the current status of the game, and it will be able to update the status of the game when a letter is guessed. However, a Hangman object will not directly interact with the user (the person playing the game). In other words, it may not use anything like `print` or `input` functions.
 
 
 ## Getting started
@@ -126,60 +95,79 @@ Then create a file called `hangman.py` and add the following code.
             else:
                 print("Sad, you lost ¯\_(ツ)_/¯. This was your word: {word}")
 
-## What to do
 
-Your task is to design and implement two classes called `Hangman` and `Lexicon`, which provide all functionality to make the starter code work without changes.
+## Assignment 1
 
-In order to allow you to check on your progress, we have provided a check50. 
+Your first task is to understand what the `Lexicon` class should look like and define an *interface* for it (recall from Queue that an interface is defined by the *operations* that are supported by a class).
+
+1. Peruse the starter code and note how the `Lexicon` class is instantiated. What kind of parameter is needed to make a valid instance of `Lexicon`?
+
+2. Find all occurrences of the `Lexicon` object in the code. What methods are called on this object? What parameters are needed and what should the method return?
+
+3. Draw a UML class from the information that you gathered. Because you're starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters.
+
+4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
+
+Finally, take your class diagram and discuss it with a teaching assistant (via Zoom!) before you continue with the next step. Do not share your diagram with other students until after the assignment is fully completed by everyone.
+
+Add your diagram and comments to a file called `analysis.pdf`. You will add more to it in assignment 3.
 
 
-- The first thing to implement is a class called `Lexicon`, which has the responsibility of managing the full word list and extracting words of a given length. It can be loaded once and asked for a word whenever a new game is started.
+## Assignment 2
 
-  > Note that the loading of words was demonstrated in last week's [Python lecture](/lectures/python)! It uses a **set** to store words, but you can modify it to use a list instead. Recall how to add items to a list?
+Having discussed your diagram and having changed it depending on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file.
 
-- You can now test using `check50` for the first time!
+Note that the loading of words was demonstrated in last week's [Python lecture](/lectures/python)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
 
-	    check50 minprog/cs50x/2019/hangman/classic --local
+Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
 
-- So now we have a class to manage the word list. We can also create a class that manages playing a game of Hangman. Let's think about what is needed to "play" a game.
+    check50 -l minprog/cs50x/2020/hangman/classic
 
-- TEST
 
-- 
+## Assignment 3
 
-### 7. Debugging with assertions
+Now you are going to analyse the `Hangman` class and define an *interface* for it.
 
-What happens when you want to create a Hangman game that does not follow the specifications? For example, what should happen if someone uses your class like the following:
+1. Peruse the starter code and note how the `Hangman` class is instantiated. What kind of parameters are needed to make a valid instance of `Hangman`?
 
-	game = Hangman(-5, 6)
+2. Find all occurrences of the `Hangman` object in the code. What methods are called on this object? What parameters are needed and what should the method return?
 
-Try it yourself! Most likely, your code will indeed try to create a hangman game with a word of length -5. But that is not going not work (ever!).
+3. Draw a UML class from the information that you gathered. Because you're starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters.
 
-Because the `Hangman` object does not interface directly with the user, it makes no sense for it to re-prompt the user for new input. However, it also makes no sense to just continue the program. It would only lead to errors further down the line. We can take this opportunity to proactively check for problems in our code. To do this, we use Python **assertions**. To create an assertion, we need to understand what would be *correct* input. We have two parameters that influence the inner workings of the Hangman object:
+4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
 
-- The parameter `length` is the length of a word to play Hangman with. Negative length is not going to work - and 0-length words will not lead to a working game either. Other options we have to think about a little bit harder: is a game for words of size 1 fun? Do 1-letter words even exist? You can check that yourself. The same goes for 2-letter words. And at the other end you could check that the `length` isn't longer than say... 10?
+Finally, take your class diagram and, again, discuss it with a teaching assistant (via Zoom!) before you continue with the next step. Do not share your diagram with other students until after the assignment is fully completed by everyone.
 
-- For `num_guesses` you should also think about what realistic input would be. But don't take it too far. We're mostly looking to constrain the parameters to *sane* values - values that make sure the program/algorithm will not crash and will provide the "right answer".
+Add your diagram and comments to a file called `analysis.pdf`.
 
-After having defined those constraints, you can formulate an assertion:
 
-    assert length > 0 and length < 10
+## Assignment 4
 
-Putting this simple stament in your code will make sure that Python halts the program if at that point the assertion "fails".
+Now implement the `Hangman` class. Again, use `check50` to check your progress.
 
-    class Hangman:
-        def __init__(self, length, num_guesses):
-            assert length > 0 and length < 10
-            # ... and here follows other code.
+
+## Assignment 5
+
+What happens when you want to create a Lexicon that does not follow the specifications? For example, what should happen if someone uses your class like the following:
+
+	words = Lexicon(-5)
+
+Try it yourself! Most likely, your code will indeed try to create a Lexicon with a word length of -5. But that is not going not work (ever!).
+
+Because the `Lexicon` object does not interface directly with the user, it makes no sense for it to re-prompt the user for new input. However, it also makes no sense to just continue the program. It would only lead to errors further down the line. We can take this opportunity to proactively check for problems in our code. To do this, we use Python **assertions**. Because we know that the Lexicon can only provide words of certain length, you can add the following assertion to the initialiser:
+
+    assert word_length > 0 and word_length < 44
+
+Putting this simple stament in your code will make sure that Python **halts** the program if at that point the assertion "fails".
 
 Now if for some reason you (or someone else) tries to create a program that creates a Hangman object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
 
-Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for the `guess()` method, as specified by `check50`.
+Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for the `guess()` method in `Hangman`, as specified by `check50`.
 
 
-## Testing
+## Final testing
 
-	check50 minprog/cs50x/2020/hangman/classic --local
+  	check50 -l minprog/cs50x/2020/hangman/classic
 
 
 ## Submitting
