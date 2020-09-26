@@ -1,7 +1,8 @@
 name: hangman-less
 files:
     required:
+        - analysis.pdf
         - hangman.py
 check:
     tool: check50
-    slug: minprog/cs50x/2019/hangman/classic
+    slug: minprog/cs50x/2020/hangman/classic
