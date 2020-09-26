@@ -1,5 +1,8 @@
 # Classic Hangman
 
+> Note: the analysis for this assignment must be done individually.
+{:.bg-warning}
+
 ## tl;dr
 
 Implement a program that allows someone to play the classic Hangman game against the computer.
@@ -166,6 +169,8 @@ Note that `check50` for this problem expects that such assertions are present in
 
 
 ## Final testing
+
+Make sure to test one final time before submitting:
 
   	check50 -l minprog/cs50x/2020/hangman/classic
 
