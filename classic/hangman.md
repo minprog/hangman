@@ -168,6 +168,11 @@ Now if for some reason you (or someone else) tries to create a program that crea
 Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for the `guess()` method in `Hangman`, as specified by `check50`.
 
 
+## Manual testing
+
+Hangman should now be a fully functional game! Test it and double-check if everything is still according to specification. If all is well, congratulations!
+
+
 ## Final testing
 
 Make sure to test one final time before submitting:
