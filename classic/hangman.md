@@ -172,7 +172,7 @@ Note that `check50` for this problem expects that such assertions are present in
 
 Make sure to test one final time before submitting:
 
-  	check50 -l minprog/cs50x/2020/hangman/classic
+    check50 -l minprog/cs50x/2020/hangman/classic
 
 
 ## Submitting
