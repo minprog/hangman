@@ -81,20 +81,19 @@ def empty_game():
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
-    game = Hangman(4, 5)
+    game = Hangman("hello", 5)
     try:
-        finished = game.finished()
+        running = game.is_running()
         won = game.won()
-        lost = game.lost()
     except Exception as e:
         raise check50.Failure("unable to call " \
-                "won, lost or finished on Hangman object",
+                "won, or is_running on Hangman object",
                 help=f"Got the exception {e}")
 
-    for expected, actual in [(False, finished), (False, won), (False, lost)]:
+    for expected, actual, method in [(True, running, "is_running()"), (False, won, "won()")]:
         if expected != actual:
-            # TODO add problematic method name to this error
-            raise check50.Mismatch(str(expected), str(actual))
+            raise check50.Mismatch(str(expected), str(actual),
+                help=f"incorrect start value for Hangman.{method}")
 
 @check50.check(empty_game)
 def win_games():
