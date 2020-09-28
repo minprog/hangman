@@ -195,9 +195,9 @@ def play_game(win):
         if not correct:
             num_wrong_guesses += 1
 
-        if len(game.current_pattern) != len(word):
+        if len(game.current_pattern()) != len(word):
             error = "invalid pattern length"
-            help = f"used word {word} but got a pattern of length {len(game.current_pattern)}"
+            help = f"used word {word} but got a pattern of length {len(game.current_pattern())}"
             raise check50.Failure(error, help=help)
 
         if correct != (letter in game.current_pattern().lower()):
