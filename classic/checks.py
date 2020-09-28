@@ -60,7 +60,7 @@ def test_lexicon():
 
 @check50.check(can_import)
 def load_hangman():
-    """creating a hangman game with parameters length=4, guesses=5 succeeds"""
+    """creating a hangman game with parameters word="hello", number_guesses=5 succeeds"""
     sys.path.append(os.getcwd())
     import hangman
     try:
@@ -69,11 +69,11 @@ def load_hangman():
         raise check50.Failure("cannot find the Hangman class")
 
     try:
-        game = Hangman(4, 5)
+        game = Hangman("hello", 5)
     except Exception as e:
-        raise check50.Failure("failed to create a Hangman object for a " \
-                "length 4 word and 5 guesses",
-                help=f"got exception {e}.")
+        raise check50.Failure('failed to create a Hangman object with ' \
+                'word "hello" and 5 guesses',
+                help=f'got exception {e}.')
 
 @check50.check(load_hangman)
 def empty_game():

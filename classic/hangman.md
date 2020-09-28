@@ -82,7 +82,7 @@ Then create a file called `hangman.py` and add the following code.
             
                 # prompt and re-prompt for single letter
                 letter = input(f"Guess a letter ({game.guesses_left} left): ")
-                if len(letter) != 1 or game.allows(letter):
+                if len(letter) != 1 or not game.allows(letter):
                     continue
             
                 # provide feedback
@@ -90,7 +90,8 @@ Then create a file called `hangman.py` and add the following code.
                     print("It's in the word! :))")
                 else:
                     print("That's not in the word :(")
-                    print(game.current_pattern())
+                    
+                print(game.current_pattern())
         
             # after game ends, present the conclusion
             if game.won():
