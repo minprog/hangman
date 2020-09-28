@@ -103,7 +103,7 @@ def win_games():
 
 @check50.check(empty_game)
 def lose_games():
-    """it is possible to lose a game (returns False) given only 5 guesses"""
+    """it is possible to lose a game (game is not running and not won) given only 5 guesses"""
     for _ in range(5):
         play_game(win=False)
 
@@ -173,13 +173,17 @@ def wrong_guesses():
 
 def play_game(win):
     """Win a game (given enough guesses)."""
+    word = ""
+ 
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
     if win:
-        game = Hangman("hello", 26)
+        word = "hello"
+        game = Hangman(word, 26)
     else:
-        game = Hangman("supercalifragilisticexpialidocious", 5)
+        word = "supercalifragilisticexpialidocious"
+        game = Hangman(word, 5)
     
     alphabet = list(string.ascii_lowercase)
     random.shuffle(alphabet)
@@ -192,18 +196,10 @@ def play_game(win):
         if not correct:
             num_wrong_guesses += 1
 
-        """
-        guessed_string_type = type(game.guessed_string())
-        if guessed_string_type != str:
-            error = f"Hangman.guessed_string() returned type {guessed_string_type.__name__}, expected a string (str)."
-            raise check50.Failure(error)
-
-        if not letter in game.guessed_string():
-            error = "A guessed letter does not appear in the game's guessed_string."
-            help = f'I guessed "{letter}" but afterwards the guessed string is ' \
-                   f'{game.guessed_string()}.'
+        if len(game.current_pattern) != len(word):
+            error = "invalid pattern length"
+            help = f"used word {word} but got a pattern of length {len(game.current_pattern)}"
             raise check50.Failure(error, help=help)
-        """
 
         if correct != (letter in game.current_pattern().lower()):
             error = "The return value of game.guess(letter) should be True if " \
