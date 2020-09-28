@@ -51,7 +51,7 @@ def test_lexicon():
 
     ten_words = [lex.get_word() for _ in range(10)]
 
-    if all(ten_words[0] == word for word in words):
+    if all(ten_words[0] == word for word in ten_words):
         raise check50.Failure('retrieved words are not random', 
             help='Lexicon.get_word() retrieves the same word each time')
     
