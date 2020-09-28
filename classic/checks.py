@@ -108,31 +108,30 @@ def lose_games():
         play_game(win=False)
 
 @check50.check(load_hangman)
-def wrong_hangman():
-    """creating a hangman game with incorrect parameters fails an assertion"""
+def wrong_lexicon():
+    """creating a Lexicon with incorrect parameters fails an assertion"""
     sys.path.append(os.getcwd())
     import hangman
-    Hangman = hangman.Hangman
+    Lexicon = hangman.Lexicon
 
-    params = [(-2, 3), (29, 5), (5, 0), (5, -1)]
+    params = [-2, 29]
     messages = ["-2 letter word, which does not exist",
-                "29 letter word, which does not exist",
-                "game with 0 guesses, which is too few",
-                "game with -1 guesses, which is too few"]
+                "29 letter word, which does not exist"]
 
-    for par_pair, message in zip(params, messages):
-        game = None
+    for param, message in zip(params, messages):
+        lex = None
         try:
-            game = Hangman(*par_pair)
+            lex = Lexicon(param)
         except AssertionError as e:
             pass
-        except Exception:
-            raise check50.Failure("got error but not an assertion failure")
+        except Exception as e: 
+            raise check50.Failure("got error but not an assertion failure",
+                help=f"got exception {e}")
 
-        if game is not None:
-            raise check50.Failure("created a Hangman object for a " + message)
+        if lex is not None:
+            raise check50.Failure("created a Lexicon object for a " + message)
 
-@check50.check(wrong_hangman)
+@check50.check(wrong_lexicon)
 def wrong_guesses():
     """calling hangman.guess() with an incorrect parameter fails an assertion"""
     sys.path.append(os.getcwd())

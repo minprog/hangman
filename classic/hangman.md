@@ -164,7 +164,7 @@ Because the `Lexicon` object does not interface directly with the user, it makes
 
 Putting this simple stament in your code will make sure that Python **halts** the program if at that point the assertion "fails".
 
-Now if for some reason you (or someone else) tries to create a program that creates a Hangman object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
+Now if for some reason you (or someone else) tries to create a program that creates a Lexicon object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
 
 Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for the `guess()` method in `Hangman`, as specified by `check50`.
 
