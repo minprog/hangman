@@ -18,20 +18,19 @@ def can_import():
     """hangman.py loads without printing anything"""
     res = check50.run('python3 -c "import hangman"').stdout(timeout=2)
     if res != "":
-        raise check50.Failure("Code produced output when imported.", 
-            help='Did you wrap all code except the classes in ' \
-                    '"if __name__ == \'__main__\'"?')
+        raise check50.Failure("code produced output when imported.", 
+            help='make sure you do not edit the distribution code.')
 
 @check50.check(can_import)
 def load_lexicon():
-    """lexicon object can be created"""
+    """lexicon object with 4-letter words can be created"""
     sys.path.append(os.getcwd())
     import hangman
     try:
         Lexicon = hangman.Lexicon
-        lex = Lexicon()
+        lex = Lexicon(4)
     except Exception as e:
-        error='unable to create a lexicon object using "Lexicon()"'
+        error='unable to create a lexicon object using "Lexicon(4)"'
         help=f"got exception {str(e)}."
         raise check50.Failure(error, help=help)
 
@@ -41,17 +40,23 @@ def test_lexicon():
     sys.path.append(os.getcwd())
     import hangman
     Lexicon = hangman.Lexicon
-    lex = Lexicon()
+    lex = Lexicon(4)
 
     try:
-        words = lex.get_words(4)
+        word = lex.get_word()
     except Exception as e:
-        raise check50.Failure('unable to get words of length 4 from lexicon '\
-            'object with "lex.get_words(4)"')
+        error='unable to get words of length 4 from lexicon object with "Lexicon.get_word()"'
+        help=f"got exception {str(e)}."
+        raise check50.Failure(error, help=help)
 
-    if len(words) != 4128:
-        raise check50.Failure("did not succesfully load all 4-letter words",
-                help=f"expected 4128 words, got {len(words)}")
+    ten_words = [lex.get_word() for _ in range(10)]
+
+    if all(ten_words[0] == word for word in words):
+        raise check50.Failure('retrieved words are not random', 
+            help='Lexicon.get_word() retrieves the same word each time')
+    
+    if any(len(word) != 4 for word in ten_words):
+        raise check50.Failure('retrieved words are not (always) the correct length')
 
 @check50.check(can_import)
 def load_hangman():
