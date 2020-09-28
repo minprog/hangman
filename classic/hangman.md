@@ -58,7 +58,7 @@ Then create a file called `hangman.py` and add the following code.
     
         # prompt and re-prompt for word length
         word_length = int(input("What length of word would you like to play with?\n"))
-        while word_length > 0 and word_length < 45:
+        while word_length < 1 or word_length > 44:
             word_length = int(input("Please choose a number between 1 and 44!\n"))
     
         # load words
@@ -66,8 +66,8 @@ Then create a file called `hangman.py` and add the following code.
     
         # prompt and re-prompt for number of guesses
         number_guesses = int(input("How many guesses are allowed?\n"))
-        while number_guesses > 0:
-            number_guesses = int(input("Negative guesses makes no sense.\n"))
+        while number_guesses <= 0:
+            number_guesses = int(input("Negative or zero guesses make no sense.\n"))
     
         # run an infinite number of games
         while True:
@@ -124,7 +124,7 @@ Note that the loading of words was demonstrated in last week's [Python lecture](
 
 Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
 
-    check50 -l minprog/cs50x/2020/hangman/classic
+    check50 -l minprog/hangman/main/classic
 
 
 ## Assignment 3
@@ -177,7 +177,7 @@ Hangman should now be a fully functional game! Test it and double-check if every
 
 Make sure to test one final time before submitting:
 
-    check50 -l minprog/cs50x/2020/hangman/classic
+    check50 -l minprog/hangman/main/classic
 
 
 ## Submitting
