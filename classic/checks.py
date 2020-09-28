@@ -177,9 +177,9 @@ def play_game(win):
     import hangman
     Hangman = hangman.Hangman
     if win:
-        game = Hangman(5, 26)
+        game = Hangman("hello", 26)
     else:
-        game = Hangman(12, 5)
+        game = Hangman("supercalifragilisticexpialidocious", 5)
     
     alphabet = list(string.ascii_lowercase)
     random.shuffle(alphabet)
@@ -192,6 +192,7 @@ def play_game(win):
         if not correct:
             num_wrong_guesses += 1
 
+        """
         guessed_string_type = type(game.guessed_string())
         if guessed_string_type != str:
             error = f"Hangman.guessed_string() returned type {guessed_string_type.__name__}, expected a string (str)."
@@ -202,8 +203,9 @@ def play_game(win):
             help = f'I guessed "{letter}" but afterwards the guessed string is ' \
                    f'{game.guessed_string()}.'
             raise check50.Failure(error, help=help)
+        """
 
-        if correct != (letter in game.pattern().lower()):
+        if correct != (letter in game.current_pattern().lower()):
             error = "The return value of game.guess(letter) should be True if " \
                     "the guess was correct, and False otherwise."
             help = f'Got the return value {correct}.'
@@ -216,7 +218,7 @@ def play_game(win):
                    f"{''.join(guesses)}."
             raise check50.Failure(error, help=help)
         
-        if game.finished():
+        if not game.is_running():
             break
         
         if not win and num_wrong_guesses >= 5:
@@ -228,7 +230,7 @@ def play_game(win):
     else:
         error = "The game is not finished, but I guessed every letter in the " \
                 "alphabet."
-        help = "Did you implement game.finished() correctly?"
+        help = "Did you implement game.is_running() correctly?"
         raise check50.Failure(error, help=help)
     
     if win: 
@@ -238,14 +240,9 @@ def play_game(win):
             help = "Did you implement game.won() correctly?"
             raise check50.Failure(error, help=help)
 
-        if game.lost() != False:
-            error = "I lost the game, even while guessing all 26 letters."
-            help = "Did you implement game.lost() correctly?"
-            raise check50.Failure(error, help=help)
-
-        if "_" in game.pattern():
+        if "_" in game.current_pattern():
             error = "Blanks in pattern after victorious game."
-            help = f"Expected a full word, but the pattern is {game.pattern()}."
+            help = f"Expected a full word, but the pattern is {game.current_pattern()}."
             raise check50.Failure(error, help=help)
 
     else:
@@ -255,14 +252,8 @@ def play_game(win):
             help = "Did you implement game.won() correctly?"
             raise check50.Failure(error, help=help)
 
-        if game.lost() != True:
-            error = "Did not lose the game with 5 random guesses for a " \
-                    "12-letter word."
-            help = "Did you implement game.lost() correctly?"
-            raise check50.Failure(error, help=help)
-
-        if not "_" in game.pattern():
+        if not "_" in game.current_pattern():
             error = "The game's pattern is filled in, even though I lost."
-            help = f"Got pattern {game.pattern()}, expected a pattern with "\
+            help = f"Got pattern {game.current_pattern()}, expected a pattern with "\
                     "underscores."
             raise check50.Failure(error, help=help)
