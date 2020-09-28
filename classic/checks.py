@@ -211,10 +211,10 @@ def play_game(win):
             help = f'Got the return value {correct}.'
             raise check50.Failure(error, help=help)
 
-        if not all(x in guesses for x in game.pattern().lower() if x != "_"):
+        if not all(x in guesses for x in game.current_pattern().lower() if x != "_"):
             error = "The game pattern contains characters other than guessed " \
                     "letters and underscores."
-            help = f"I found pattern {game.pattern()} with guesses " \
+            help = f"I found pattern {game.current_pattern()} with guesses " \
                    f"{''.join(guesses)}."
             raise check50.Failure(error, help=help)
         
