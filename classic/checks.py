@@ -131,13 +131,37 @@ def wrong_lexicon():
         if lex is not None:
             raise check50.Failure("created a Lexicon object for a " + message)
 
-@check50.check(wrong_lexicon)
+@check50.check(load_hangman)
+def wrong_hangman():
+    """creating a Hangman object with incorrect parameters fails an assertion"""
+    sys.path.append(os.getcwd())
+    import hangman
+    Hangman = hangman.Hangman
+
+    params = [("hello", 0), ("hello", -1)]
+    messages = ["0 guesses, which is too few",
+                "-1 guesses, which is too few"]
+
+    for pars, message in zip(params, messages):
+        game = None
+        try:
+            lex = Hangman(*pars)
+        except AssertionError as e:
+            pass
+        except Exception as e: 
+            raise check50.Failure("got error but not an assertion failure",
+                help=f"got exception {e}")
+
+        if game is not None:
+            raise check50.Failure("created a Hangman object for " + message)
+
+@check50.check(load_hangman)
 def wrong_guesses():
     """calling hangman.guess() with an incorrect parameter fails an assertion"""
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
-    game = Hangman(4, 5)
+    game = Hangman("hello", 5)
 
     inputs = ["blaat", " ", "6", 25, True, False, None]
     for wrong_input in inputs:
@@ -153,7 +177,6 @@ def wrong_guesses():
             raise check50.Failure(f"guess of {repr(wrong_input)} was accepted, " \
                     "but any input other than a single letter should fail " \
                     "an assertion")
-
     try:
         game.guess('A')
     except AssertionError:
@@ -168,7 +191,6 @@ def wrong_guesses():
     if accepted:
         raise check50.Failure("Guessing an already guessed letter should give " \
                 "an AssertionError.")
-
 
 def play_game(win):
     """Win a game (given enough guesses)."""
