@@ -77,7 +77,7 @@ def load_hangman():
 
 @check50.check(load_hangman)
 def empty_game():
-    """finished, won and lost respond correctly for a brand new game"""
+    """is_running and won respond correctly for a brand new game"""
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
@@ -93,7 +93,7 @@ def empty_game():
     for expected, actual, method in [(True, running, "is_running()"), (False, won, "won()")]:
         if expected != actual:
             raise check50.Mismatch(str(expected), str(actual),
-                help=f"incorrect start value for Hangman.{method}")
+                help=f"incorrect return value of Hangman.{method} for new game")
 
 @check50.check(empty_game)
 def win_games():
