@@ -125,7 +125,7 @@ Note that the loading of words is demonstrated in Harvard's [Python lecture](/le
 
 Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
 
-    check50 -l minprog/hangman/main/classic
+    check50 -l minprog/hangman/2020/classic
 
 
 ## Assignment 3
