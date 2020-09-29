@@ -121,7 +121,7 @@ Add your diagram and comments to a file called `analysis.pdf`. You will add more
 
 Having discussed your diagram and having changed it depending on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file.
 
-Note that the loading of words was demonstrated in last week's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
+Note that the loading of words is demonstrated in Harvard's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
 
 Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
 
@@ -178,7 +178,7 @@ Hangman should now be a fully functional game! Test it and double-check if every
 
 Make sure to test one final time before submitting:
 
-    check50 -l minprog/hangman/main/classic
+    check50 -l minprog/hangman/2020/classic
 
 
 ## Submitting
