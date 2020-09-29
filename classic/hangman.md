@@ -33,11 +33,11 @@ Fundamental to the game is the fact the first player accurately represents the w
 
 ## Specification
 
-Your assignment is to write a computer program which plays a game of Hangman using the game rules above. In fact, you will be provided with the main program, but all game logic is missing. Your task is to design and implement two classes called `Hangman` and `Lexicon`, which provide all functionality to make the starter code work *without changes*.
+Your assignment is to write a computer program which plays a game of Hangman using the game rules above. In fact, you will be provided with the main program, but all **game logic** is missing. Your task is to design and implement two classes called `Hangman` and `Lexicon`, which together provide all functionality to make the starter code work *without any changes*.
 
-- `Lexicon` objects are used to retrieve words for the game from a dictionary. Eventually, the `Lexicon` class will be based on the file `dictionary.txt`, which contains the full contents of the Official Scrabble Player's Dictionary, Second Edition. This word list has over 120,000 words, which should be more than enough for our purposes.
+- Objects of class `Lexicon` are used to retrieve words for the game from a dictionary. The `Lexicon` class will be based on the file `dictionary.txt`, which contains the full contents of the Official Scrabble Player's Dictionary, Second Edition. This word list has over 120,000 words, which should be more than enough for our purposes.
 
-- A `Hangman` object will include all of the logic needed to play the game. It will keep track of the current status of the game, and it will be able to update the status of the game when a letter is guessed. However, a Hangman object will not directly interact with the user (the person playing the game). In other words, it may not use anything like `print` or `input` functions.
+- Objects of class `Hangman` will include all of the logic needed to play a single game. The objects keep track of the current status of the game, and are able to update the status of the game when a letter is guessed. However, a Hangman object will not directly interact with the "user" (the person playing the game via the keyboard). In other words, it may not use anything like `print` or `input` functions.
 
 
 ## Getting started
@@ -46,7 +46,7 @@ Download the word lexicon via:
 
     mkdir ~/hangman
     cd ~/hangman
-    wget https://github.com/minprog/hangman/raw/main/classic/dictionary.zip
+    wget https://github.com/minprog/hangman/raw/2020/classic/dictionary.zip
     unzip dictionary.zip
     rm -f dictionary.zip
 
@@ -58,8 +58,8 @@ Then create a file called `hangman.py` and add the following code.
     
         # prompt and re-prompt for word length
         word_length = int(input("What length of word would you like to play with?\n"))
-        while word_length < 1 or word_length > 44:
-            word_length = int(input("Please choose a number between 1 and 44!\n"))
+        while word_length > 44:
+            word_length = int(input("No words are longer than 44 letters!\n"))
     
         # load words
         lexicon = Lexicon(word_length)
@@ -104,11 +104,11 @@ Then create a file called `hangman.py` and add the following code.
 
 Your first task is to understand what the `Lexicon` class should look like and define an *interface* for it (recall from Queue that an interface is defined by the *operations* that are supported by a class).
 
-1. Peruse the starter code and note how the `Lexicon` class is instantiated. What kind of parameter is needed to make a valid instance of `Lexicon`?
+1. Deeply study the starter code and make note in particular of how the `Lexicon` class is instantiated. What kind of parameter is needed to make a valid instance of `Lexicon`?
 
-2. Find all occurrences of the `Lexicon` object in the code. What methods are called on this object? What parameters are needed and what should the method return?
+2. Find all occurrences of the `Lexicon` object in the code (only one instance is ever made). What methods are called on this object? What parameters are needed and what should the method return?
 
-3. Draw a UML class from the information that you gathered. Because you're starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters.
+3. Draw your class in UML class diagram format. Because you're just starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters. In other words, the UML diagram should contain *implementation details*.
 
 4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
 
@@ -119,7 +119,7 @@ Add your diagram and comments to a file called `analysis.pdf`. You will add more
 
 ## Assignment 2
 
-Having discussed your diagram and having changed it depending on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file.
+Having discussed your diagram, and having changed it based on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file above the started code.
 
 Note that the loading of words is demonstrated in Harvard's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
 
@@ -136,7 +136,7 @@ Now you are going to analyse the `Hangman` class and define an *interface* for i
 
 2. Find all occurrences of the `Hangman` object in the code. What methods are called on this object? What parameters are needed and what should the method return?
 
-3. Draw a UML class from the information that you gathered. Because you're starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters.
+3. Draw a UML class diagram from the information that you gathered. Because you're starting out and trying to understand the problem, put in all known implementation details.
 
 4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
 
@@ -150,28 +150,60 @@ Add your diagram and comments to a file called `analysis.pdf`.
 Now implement the `Hangman` class. Again, use `check50` to check your progress.
 
 
+## About assertions
+
+In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things!
+
+Let us provide you with a counterexample. In our `main` program, there is a lot of **user input validation**. Hopefully, this is enough to prevent the program from crashing. But we have omitted at least one check. We actually allow negative word lengths!
+
+Try it out. When you run your program and provide word length -1, it will accept the number and your program may crash at any point because of this situation that should not happen. For example, you might get the following interaction:
+
+     1 WELCOME TO HANGMAN ツ
+     2 What length of word would you like to play with?
+     3 -1
+     4 How many guesses are allowed?
+     5 10
+     6 I have a word in my mind of -1 letters.
+     7 Traceback (most recent call last):
+     8   File "hangman.py", line 115, in <module>
+     9     word = lexicon.get_word()
+    10   File "hangman.py", line 35, in get_word
+    11     return random.choice(self.words)
+    12   File "lib/python3.8/random.py", line 290, in choice
+    13     raise IndexError('Cannot choose from an empty sequence') from None
+    14 IndexError: Cannot choose from an empty sequence
+
+What you can see on line 11 is that the crash happens in `get_word()` when it tries to select a random word. From the error message on line 14 you might understand that `self.words` is an `empty sequence`, or in other words, an list with no words in it. But the **root cause** of the problem is that the class allowed itself to be instantiated with a word length of -1. You'll have to dive into the code to understand that.
+
+Now an obvious fix is to change the main *user interface code* to ensure that the user enters a word length of at least 4 (or so). That might make a nicer game and is a good idea in any case.
+
+However, it is **also** a good idea to protect your classes a bit against "abuse". Why should the `Lexicon` class accept negative word lengths at all? In that class, we have a small portion of code and we know well how it works. We also know that it is based on `dictionary.txt` (which it opens) and what the limits of that word list are. So let's put in a so-called **assertion** that forces a check. Add the following line to the very top of the `Lexicon` initialiser:
+
+    assert word_length > 0 and word_length < 44, "Invalid word length for Lexicon"
+
+Putting this simple stament in your code will make sure that Python **halts** the program if at that point the assertion "fails". In that case the program will not even reach the point of choosing a word from an empty list:
+
+      1 WELCOME TO HANGMAN ツ
+      2 What length of word would you like to play with?
+      3 -1
+      4 Traceback (most recent call last):
+      5   File "hangman.py", line 103, in <module>
+      6     lexicon = Lexicon(word_length)
+      7   File "hangman.py", line 20, in __init__
+      8     assert length > 0 and length < 44, "Invalid word length for Lexicon"
+      9 AssertionError: Invalid word length for Lexicon
+
+Now you can immediately see that you should never try to create a `Lexicon` object with a negative word length. The assertion clearly **specifies** the length that is allowed as a parameter.
+
+
 ## Assignment 5
 
-What happens when you want to create a Lexicon that does not follow the specifications? For example, what should happen if someone uses your class like the following:
-
-	words = Lexicon(-5)
-
-Try it yourself! Most likely, your code will indeed try to create a Lexicon with a word length of -5. But that is not going not work (ever!).
-
-Because the `Lexicon` object does not interface directly with the user, it makes no sense for it to re-prompt the user for new input. However, it also makes no sense to just continue the program. It would only lead to errors further down the line. We can take this opportunity to proactively check for problems in our code. To do this, we use Python **assertions**. Because we know that the Lexicon can only provide words of certain length, you can add the following assertion to the initialiser:
-
-    assert word_length > 0 and word_length < 44
-
-Putting this simple stament in your code will make sure that Python **halts** the program if at that point the assertion "fails".
-
-Now if for some reason you (or someone else) tries to create a program that creates a Lexicon object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
-
-Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for initializing a `Hangman` object and the `guess()` method in `Hangman`, as specified by `check50`.
+`check50` for this problem expects that such assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`, as specified by `check50`.
 
 
 ## Manual testing
 
-Hangman should now be a fully functional game! Test it and double-check if everything is still according to specification. If all is well, congratulations!
+Hangman should now be a fully functional game that can hardly be crashed! Test it and double-check if everything is still according to specification. If all is well, congratulations!
 
 
 ## Final testing
