@@ -1,5 +1,6 @@
 check50:
     files:
         - !exclude "*"
+        - !include "dictionary.txt"
         - !require hangman.py
     checks: checks.py
