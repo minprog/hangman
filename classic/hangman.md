@@ -225,4 +225,4 @@ Make sure to test one final time before submitting:
 
 ## Submitting
 
-To submit this assignment, you need to submit all of your source files.
+To submit this assignment, submit your UML diagrams in a PDF called analysis.pdf, together with your code.
