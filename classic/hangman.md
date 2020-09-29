@@ -179,7 +179,7 @@ Bummer! A generic error, "Cannot choose from an empty sequence". But what is the
 
 What you can see on line 11 is that the crash happens in our function `get_word()` when it tries to select a random word. From the error message on line 14 you might understand that `self.words` is an `empty sequence`, or in other words, an list with no words in it.
 
-But that is not the root cause! We must now ask: why was that list empty in the first place? And finally, after some back and forth, you might find that the root cause of the problem is that the class allowed itself to be instantiated with a word length of -1. You've had to take a deep dive into the code to understand that.
+But that is not the root cause! We must now ask: why was that list empty in the first place? And finally, after some back and forth, you might find that the root cause of the problem is that the class allowed itself to be instantiated with a word length of -1. You've had to take a deep dive into the code to understand that if you didn't know the answer already.
 
 ### Fixing the bug
 
@@ -188,6 +188,8 @@ Now an obvious fix is to change the main code (that we provided) to ensure that 
 However, let's also make it much easier to debug our program by clearly **specifying** in the `Lexicon` initialiser which lengths are allowed. Why should the `Lexicon` class accept negative word lengths indeed? So let's put in a so-called **assertion** that forces this check and specified the limits of the class. Add the following line to the very top of the `Lexicon` initialiser:
 
     assert word_length > 0 and word_length < 44, "Invalid word length for Lexicon"
+
+(Note that we assume your parameter is called `word_length`, but it's fine if it is something else. Just change the assertion in that case.)
 
 Putting this simple stament in your code will make sure that Python "halts" (crashes) the program if at that point the assertion "fails", so to say. In that case the program will not even reach the point of choosing a word from an empty list:
 
@@ -206,12 +208,12 @@ In sharp contrast to the error above, we are now immediately confronted with the
 
 ## Assignment 5
 
-`check50` for this problem expects that such assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`, as specified by `check50`.
+`check50` for this problem expects that such assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`. `check50` might provide some hints as to what assertions could be made.
 
 
 ## Manual testing
 
-Hangman should now be a fully functional game that is also easy to debug! Test it and double-check if everything is still according to specification. If all is well, congratulations!
+Hangman should now be a fully functional game that is also somewhat easier to debug. Test it and double-check if everything is still according to specification. If all is well, congratulations!
 
 
 ## Final testing
