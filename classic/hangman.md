@@ -152,11 +152,13 @@ Now implement the `Hangman` class. Again, use `check50` to check your progress.
 
 ## About assertions
 
-In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things!
+In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things, so testing "by hand" is always important. And indeed, we will find that we are able to crash the program!
 
-Let us provide you with a counterexample. In our `main` program, there is a lot of **user input validation**. Hopefully, this is enough to prevent the program from crashing. But we have omitted at least one check. We actually allow negative word lengths!
+### Debugging a crash
 
-Try it out. When you run your program and provide word length -1, it will accept the number and your program may crash at any point because of this situation that should not happen. For example, you might get the following interaction:
+As we put our game in front of different people, it appears that they are still able to crash it. In particular, the program does not check for negative word lengths. And indeed, when you run your program and provide word length -1, it accepts the number. Unfortunately, while this does not immediately prove to be a problem, the program crashes as soon as the actual game starts.
+
+Have a good look at what happens:
 
      1 WELCOME TO HANGMAN ツ
      2 What length of word would you like to play with?
@@ -173,15 +175,21 @@ Try it out. When you run your program and provide word length -1, it will accept
     13     raise IndexError('Cannot choose from an empty sequence') from None
     14 IndexError: Cannot choose from an empty sequence
 
-What you can see on line 11 is that the crash happens in `get_word()` when it tries to select a random word. From the error message on line 14 you might understand that `self.words` is an `empty sequence`, or in other words, an list with no words in it. But the **root cause** of the problem is that the class allowed itself to be instantiated with a word length of -1. You'll have to dive into the code to understand that.
+Bummer! A generic error, "Cannot choose from an empty sequence". But what is the **root cause** of our bug? It not immediately obvious from the traceback above.
 
-Now an obvious fix is to change the main *user interface code* to ensure that the user enters a word length of at least 4 (or so). That might make a nicer game and is a good idea in any case.
+What you can see on line 11 is that the crash happens in our function `get_word()` when it tries to select a random word. From the error message on line 14 you might understand that `self.words` is an `empty sequence`, or in other words, an list with no words in it.
 
-However, it is **also** a good idea to protect your classes a bit against "abuse". Why should the `Lexicon` class accept negative word lengths at all? In that class, we have a small portion of code and we know well how it works. We also know that it is based on `dictionary.txt` (which it opens) and what the limits of that word list are. So let's put in a so-called **assertion** that forces a check. Add the following line to the very top of the `Lexicon` initialiser:
+But that is not the root cause! We must now ask: why was that list empty in the first place? And finally, after some back and forth, you might find that the root cause of the problem is that the class allowed itself to be instantiated with a word length of -1. You've had to take a deep dive into the code to understand that.
+
+### Fixing the bug
+
+Now an obvious fix is to change the main code (that we provided) to ensure that your game player enters a word length of at least 4 (or so). That might make a nicer game and is a good idea in any case. Fine!
+
+However, let's also make it much easier to debug our program by clearly **specifying** in the `Lexicon` initialiser which lengths are allowed. Why should the `Lexicon` class accept negative word lengths indeed? So let's put in a so-called **assertion** that forces this check and specified the limits of the class. Add the following line to the very top of the `Lexicon` initialiser:
 
     assert word_length > 0 and word_length < 44, "Invalid word length for Lexicon"
 
-Putting this simple stament in your code will make sure that Python **halts** the program if at that point the assertion "fails". In that case the program will not even reach the point of choosing a word from an empty list:
+Putting this simple stament in your code will make sure that Python "halts" (crashes) the program if at that point the assertion "fails", so to say. In that case the program will not even reach the point of choosing a word from an empty list:
 
       1 WELCOME TO HANGMAN ツ
       2 What length of word would you like to play with?
@@ -193,7 +201,7 @@ Putting this simple stament in your code will make sure that Python **halts** th
       8     assert length > 0 and length < 44, "Invalid word length for Lexicon"
       9 AssertionError: Invalid word length for Lexicon
 
-Now you can immediately see that you should never try to create a `Lexicon` object with a negative word length. The assertion clearly **specifies** the length that is allowed as a parameter.
+In sharp contrast to the error above, we are now immediately confronted with the root cause of the crash: we tried to instantiate the `Lexicon` class with an invalid word length.
 
 
 ## Assignment 5
@@ -203,7 +211,7 @@ Now you can immediately see that you should never try to create a `Lexicon` obje
 
 ## Manual testing
 
-Hangman should now be a fully functional game that can hardly be crashed! Test it and double-check if everything is still according to specification. If all is well, congratulations!
+Hangman should now be a fully functional game that is also easy to debug! Test it and double-check if everything is still according to specification. If all is well, congratulations!
 
 
 ## Final testing
