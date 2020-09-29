@@ -82,7 +82,7 @@ Then create a file called `hangman.py` and add the following code.
             
                 # prompt and re-prompt for single letter
                 letter = input(f"Guess a letter ({game.guesses_left} left): ")
-                if len(letter) != 1 or not game.allows(letter):
+                if len(letter) != 1 or not game.is_valid_guess(letter):
                     continue
             
                 # provide feedback
@@ -166,7 +166,7 @@ Putting this simple stament in your code will make sure that Python **halts** th
 
 Now if for some reason you (or someone else) tries to create a program that creates a Lexicon object using a `length` of -5, Python will halt it immediately. You can then immediately see why it halted: the assertion failed, which means the parameter had an "impossible" value. You can than trace back **why** that parameter was -5 in the first place. Probably a mistake!
 
-Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for the `guess()` method in `Hangman`, as specified by `check50`.
+Note that `check50` for this problem expects that such assertions are present in your code. In particular, you should **also** handle invalid input for initializing a `Hangman` object and the `guess()` method in `Hangman`, as specified by `check50`.
 
 
 ## Manual testing
