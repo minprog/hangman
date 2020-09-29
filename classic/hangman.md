@@ -185,7 +185,7 @@ But that is not the root cause! We must now ask: why was that list empty in the 
 
 Now an obvious fix is to change the main code (that we provided) to ensure that your game player enters a word length of at least 4 (or so). That might make a nicer game and is a good idea in any case. Fine!
 
-However, let's also make it much easier to debug our program by clearly **specifying** in the `Lexicon` initialiser which lengths are allowed. Why should the `Lexicon` class accept negative word lengths indeed? So let's put in a so-called **assertion** that forces this check and specified the limits of the class. Add the following line to the very top of the `Lexicon` initialiser:
+But can't we also prevent the `Lexicon` initialiser from accepting invalid word lengths? It would be much easier to debug our program when this class simply does not accept negative word lengths. And indeed, there is a thing called an **assertion** that we can use. Just add the following line to the very top of the `Lexicon` initialiser:
 
     assert word_length > 0 and word_length < 44, "Invalid word length for Lexicon"
 
