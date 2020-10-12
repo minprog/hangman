@@ -163,7 +163,7 @@ def wrong_guesses():
     Hangman = hangman.Hangman
     game = Hangman("hello", 5)
 
-    inputs = ["blaat", " ", "6", 25, True, False, None]
+    inputs = ["blaat", " ", "6"]
     for wrong_input in inputs:
         accepted = True
         try:
