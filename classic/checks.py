@@ -213,6 +213,7 @@ def play_game(win):
 
     for letter in alphabet:
         guesses.append(letter)
+        game.is_valid_guess(letter)
         correct = game.guess(letter)
         if not correct:
             num_wrong_guesses += 1
