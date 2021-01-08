@@ -109,14 +109,14 @@ def lose_games():
 
 @check50.check(load_hangman)
 def wrong_lexicon():
-    """creating a Lexicon with incorrect parameters fails an assertion"""
+    """creating a Lexicon with incorrect parameters yields an assertion error"""
     sys.path.append(os.getcwd())
     import hangman
     Lexicon = hangman.Lexicon
 
     params = [-2, 29]
-    messages = ["-2 letter word, which does not exist",
-                "29 letter word, which does not exist"]
+    messages = ["negative word length",
+                "word length that does not appear anywhere in the dictionary"]
 
     for param, message in zip(params, messages):
         lex = None
@@ -129,7 +129,7 @@ def wrong_lexicon():
                 help=f"got exception {e}")
 
         if lex is not None:
-            raise check50.Failure("created a Lexicon object for a " + message)
+            raise check50.Failure("when creating a Lexicon object for a " + message)
 
 @check50.check(load_hangman)
 def wrong_hangman():
@@ -213,7 +213,15 @@ def play_game(win):
 
     for letter in alphabet:
         guesses.append(letter)
+        
+        remaining = game.guesses_left
         game.is_valid_guess(letter)
+
+        if game.guesses_left != remaining:
+            error = "state changes after calling Hangman.is_valid_guess()"
+            help = f"Hangman.is_valid_guess() is not to supposed to update anything, only to check if a guess would be valid"
+            raise check50.Failure(error, help=help)
+        
         correct = game.guess(letter)
         if not correct:
             num_wrong_guesses += 1
