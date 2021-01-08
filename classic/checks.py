@@ -109,7 +109,7 @@ def lose_games():
 
 @check50.check(load_hangman)
 def wrong_lexicon():
-    """creating a Lexicon with incorrect parameters fails an assertion"""
+    """creating a Lexicon with incorrect parameters yields an assertion error"""
     sys.path.append(os.getcwd())
     import hangman
     Lexicon = hangman.Lexicon
@@ -129,7 +129,7 @@ def wrong_lexicon():
                 help=f"got exception {e}")
 
         if lex is not None:
-            raise check50.Failure("created a Lexicon object for a " + message)
+            raise check50.Failure("when creating a Lexicon object for a " + message)
 
 @check50.check(load_hangman)
 def wrong_hangman():
