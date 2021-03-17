@@ -1,8 +1,5 @@
 # Classic Hangman
 
-> Note: the analysis for this problem must be done individually. Instructions for the analysis are included in the assignments below.
-{:.bg-warning}
-
 ## tl;dr
 
 Implement a program that allows someone to play the classic Hangman game against the computer.
@@ -106,7 +103,7 @@ Your first task is to understand what the `Lexicon` class should look like and d
 
 1. Deeply study the starter code and make note in particular of how the `Lexicon` class is instantiated. What kind of parameter is needed to make a valid instance of `Lexicon`?
 
-2. Find all occurrences of the `Lexicon` object in the code (only one instance is ever made). What methods are called on this object? What parameters are needed and what should the method return?
+2. Find all occurrences of the `Lexicon` object in the code (only a single instance is ever made). What methods are called on this object? What parameters are needed and what should the method return?
 
 3. Draw your class in UML class diagram format. Because you're just starting out and trying to understand the problem, put as much information in there as possible, including return types and parameters. In other words, the UML diagram should contain *implementation details*.
 
