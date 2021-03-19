@@ -109,14 +109,14 @@ Your first task is to understand what the `Lexicon` class should look like and d
 
 4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
 
-Finally, take your class diagram and discuss it with a teaching assistant (via Zoom!) before you continue with the next step. Do not share your diagram with other students until after the assignment is fully completed by everyone.
+Do not share your diagram with other students until after the assignment is fully completed by everyone.
 
-Add your diagram and comments to a file called `analysis.pdf`. You will add more to it in assignment 3.
+Add your diagram and the answers the the questions to a file called `analysis.pdf`. You will add more to it in assignment 3.
 
 
 ## Assignment 2
 
-Having discussed your diagram, and having changed it based on the feedback and questions from your teaching assistant, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file above the started code.
+Having created your diagram, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file above the started code.
 
 Note that the loading of words is demonstrated in Harvard's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
 
@@ -137,9 +137,9 @@ Now you are going to analyse the `Hangman` class and define an *interface* for i
 
 4. Think about the internal structure of the class: what variables do you need to support all expected operations? Write your ideas below the diagram.
 
-Finally, take your class diagram and, again, discuss it with a teaching assistant (via Zoom!) before you continue with the next step. Do not share your diagram with other students until after the assignment is fully completed by everyone.
+Again, do not share your diagram with other students until after the assignment is fully completed by everyone.
 
-Add your diagram and comments to a file called `analysis.pdf`.
+Add your complete diagram and the answers to the questions to a file called `analysis.pdf`.
 
 
 ## Assignment 4
