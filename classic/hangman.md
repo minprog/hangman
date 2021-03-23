@@ -78,7 +78,7 @@ Then create a file called `hangman.py` and add the following code.
             while game.is_running():
             
                 # prompt and re-prompt for single letter
-                letter = input(f"Guess a letter ({game.guesses_left} left): ")
+                letter = input(f"Guess a letter ({game.guesses_left()} left): ")
                 if len(letter) != 1 or not game.is_valid_guess(letter):
                     continue
             
