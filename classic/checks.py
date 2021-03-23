@@ -214,10 +214,10 @@ def play_game(win):
     for letter in alphabet:
         guesses.append(letter)
         
-        remaining = game.guesses_left
+        remaining = game.guesses_left()
         game.is_valid_guess(letter)
 
-        if game.guesses_left != remaining:
+        if game.guesses_left() != remaining:
             error = "state changes after calling Hangman.is_valid_guess()"
             help = f"Hangman.is_valid_guess() is not to supposed to update anything, only to check if a guess would be valid"
             raise check50.Failure(error, help=help)
