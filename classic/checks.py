@@ -18,8 +18,9 @@ def can_import():
     """hangman.py loads without printing anything"""
     res = check50.run('python3 -c "import hangman"').stdout(timeout=2)
     if res != "":
+        check50.log("Got output: " + res)
         raise check50.Failure("code produced output when imported.", 
-            help='make sure you do not edit the distribution code.')
+            help='make sure you do not edit the distribution code and make sure your code is free of exceptions.')
 
 @check50.check(can_import)
 def load_lexicon():
