@@ -96,6 +96,8 @@ Then create a file called `hangman.py` and add the following code.
             else:
                 print(f"Sad, you lost ¯\_(ツ)_/¯. This was your word: {word}")
 
+(This code does not contain any type hints. Your classes should contain type hints though!)
+
 
 ## Assignment 1
 
@@ -118,11 +120,22 @@ Add your diagram and the answers the the questions to a file called `analysis.pd
 
 Having created your diagram, you can implement your `Lexicon` class. Place it inside the `hangman.py` source file above the started code.
 
-Note that the loading of words is demonstrated in Harvard's [Python lecture](/lectures/python-david)! It uses a **set** to store words, but that is not necessarily the best choice for this problem. Adapt the code as needed.
+In the initializer for `Lexicon`, load words from `dictionary.txt`. The following code can be 
 
-Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided. Instead, you can use `check50` to check the basic functionality of your new class:
+    words = set()
+    file = open('dictionary.txt', "r")
+    for line in file:
+        words.add(line.rstrip())
+    file.close()
 
-    check50 -l minprog/hangman/2020/classic
+Make sure that all words of the right length are stored in an instance variable in `Lexicon`. Then complete the remainder of the class (using what you know from studying the `main` code).
+
+Because the `Hangman` class is still missing, you can't really test the `Lexicon` class yet using the started code that we provided, because it will crash. Instead, you may submit your file to check the basic functionality of just the `Lexicon` class. It should yield these positive results:
+
+    :) hangman.py exists
+    :) hangman.py loads without printing anything
+    :) lexicon object with 4-letter words can be created
+    :) lexicon object correctly extracts 4-letter words from dictionary.txt
 
 
 ## Assignment 3
@@ -149,7 +162,7 @@ Now implement the `Hangman` class. Again, use `check50` to check your progress.
 
 ## About assertions
 
-In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things, so testing "by hand" is always important. And indeed, we will find that we are able to crash the program!
+In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things, so testing manually is always important. And indeed, we will find that we are able to crash the program!
 
 ### Debugging a crash
 
@@ -205,19 +218,12 @@ In sharp contrast to the error above, we are now immediately confronted with the
 
 ## Assignment 5
 
-`check50` for this problem expects that such assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`. `check50` might provide some hints as to what assertions could be made.
+The checks for this problem expect that some assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`. `check50` might provide some hints as to what assertions could be made.
 
 
 ## Manual testing
 
 Hangman should now be a fully functional game that is also somewhat easier to debug. Test it and double-check if everything is still according to specification. If all is well, congratulations!
-
-
-## Final testing
-
-Make sure to test one final time before submitting:
-
-    check50 -l minprog/hangman/2020/classic
 
 
 ## Submitting

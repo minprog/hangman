@@ -23,7 +23,7 @@ def can_import():
 
 @check50.check(can_import)
 def load_lexicon():
-    """lexicon object with 4-letter words can be created"""
+    """lexicon object can be instantiated without error"""
     sys.path.append(os.getcwd())
     import hangman
     try:
@@ -109,14 +109,14 @@ def lose_games():
 
 @check50.check(load_hangman)
 def wrong_lexicon():
-    """creating a Lexicon with incorrect parameters yields an assertion error"""
+    """creating a Lexicon with incorrect parameters triggers an assertion"""
     sys.path.append(os.getcwd())
     import hangman
     Lexicon = hangman.Lexicon
 
     params = [-2, 29]
     messages = ["negative word length",
-                "word length that does not appear anywhere in the dictionary"]
+                "word length of 29, but there are no words of length 29 in the file"]
 
     for param, message in zip(params, messages):
         lex = None
@@ -133,7 +133,7 @@ def wrong_lexicon():
 
 @check50.check(load_hangman)
 def wrong_hangman():
-    """creating a Hangman object with incorrect parameters fails an assertion"""
+    """creating a Hangman object with incorrect parameters triggers an assertion"""
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
@@ -157,7 +157,7 @@ def wrong_hangman():
 
 @check50.check(load_hangman)
 def wrong_guesses():
-    """calling hangman.guess() with an incorrect parameter fails an assertion"""
+    """calling hangman.guess() with an incorrect parameter triggers an assertion"""
     sys.path.append(os.getcwd())
     import hangman
     Hangman = hangman.Hangman
