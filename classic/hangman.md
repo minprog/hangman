@@ -160,7 +160,7 @@ Now implement the `Hangman` class. Again, use `check50` to check your progress.
 
 ## About assertions
 
-In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. `check50` can only test a limited number of things, so testing manually is always important. And indeed, we will find that we are able to crash the program!
+In some sense of the word, your implementation is now done! You should at the very least try it out and see if all is working well. However, automatic testing can only check a limited number of requirements, and it will not always find all bugs. So testing manually is always important. And indeed, we will find that we are able to crash the program!
 
 ### Debugging a crash
 
