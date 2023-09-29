@@ -41,9 +41,7 @@ Your assignment is to write a computer program which plays a game of Hangman usi
 
 Download the word lexicon via:
 
-    mkdir ~/hangman
-    cd ~/hangman
-    wget https://github.com/minprog/hangman/raw/2020/classic/dictionary.zip
+    curl -LO https://github.com/minprog/hangman/raw/2020/classic/dictionary.zip
     unzip dictionary.zip
     rm -f dictionary.zip
 
