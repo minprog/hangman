@@ -39,11 +39,13 @@ Your assignment is to write a computer program which plays a game of Hangman usi
 
 ## Getting started
 
-Download the word lexicon via:
+On Linux, WSL or Mac, download the word lexicon via:
 
     curl -LO https://github.com/minprog/hangman/raw/2020/classic/dictionary.zip
     unzip dictionary.zip
     rm -f dictionary.zip
+
+If you're not using on of those operating systems, copy the link and download the dictionary zip using it.
 
 Then create a file called `hangman.py` and add the following code.
 
