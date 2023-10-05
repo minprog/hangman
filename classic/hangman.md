@@ -157,7 +157,7 @@ Add your complete diagram and the answers to the questions to a file called `ana
 
 ## Assignment 4
 
-Now implement the `Hangman` class. Again, use `check50` to check your progress.
+Now implement the `Hangman` class. You can submit your solution to check your progress.
 
 
 ## About assertions
@@ -218,7 +218,7 @@ In sharp contrast to the error above, we are now immediately confronted with the
 
 ## Assignment 5
 
-The checks for this problem expect that some assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`. `check50` might provide some hints as to what assertions could be made.
+The checks for this problem expect that some assertions are present in your code. In particular, you should not only insert the assertion for word length but **also** handle invalid input for initialising a `Hangman` object and the `guess()` method in `Hangman`. If you submit your solution on the website, it might provide some hints as to what assertions could be made.
 
 
 ## Manual testing
