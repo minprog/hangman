@@ -5,4 +5,4 @@ files:
         - hangman.py
 check:
     tool: check50
-    slug: minprog/hangman/2020/classic
+    slug: minprog/hangman/2021/classic
